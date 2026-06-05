@@ -361,12 +361,22 @@ function App() {
 
         {tab === 'obras' && <section className="grid3">
           {obras.map(o => (
-            <div className="panel" key={o.id || o.nome}>
+           <div
+  className="panel obraCard"
+  key={o.id || o.nome}
+  onClick={() => setObraAberta(obraAberta === o.nome ? null : o.nome)}
+  style={{ cursor: 'pointer' }}
+>
               <h3>{o.nome}</h3>
-              <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
-              <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
-              {obraAberta === o.nome && (
-  <div className="driveButtons" onClick={e => e.stopPropagation()}>
+
+<p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
+
+<p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
+
+<small>Clique para abrir as pastas</small>
+
+{obraAberta === o.nome && (
+  <div className="driveButtons" onClick={(e) => e.stopPropagation()}>
     {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
     {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
     {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
