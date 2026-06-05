@@ -90,6 +90,7 @@ function App() {
   const [obras, setObras] = useState(obrasPadrao);
   const [busca, setBusca] = useState('');
   const [obraFiltro, setObraFiltro] = useState('Todas');
+  const [obraAberta, setObraAberta] = useState(null);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
   const [novo, setNovo] = useState({
