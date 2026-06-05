@@ -364,17 +364,16 @@ function App() {
               <h3>{o.nome}</h3>
               <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
               <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
-              <div className="driveButtons">
-                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
-                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
-                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
-                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank">Documentos <ExternalLink size={14} /></a>}
-                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank">Obsoletos <ExternalLink size={14} /></a>}
-                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank"><FolderOpen size={14} /> Pasta principal</a>}
-              </div>
-            </div>
-          ))}
-        </section>}
+              {obraAberta === o.nome && (
+  <div className="driveButtons" onClick={e => e.stopPropagation()}>
+    {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
+    {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
+    {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
+    {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank">Documentos da Obra <ExternalLink size={14} /></a>}
+    {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank">Obsoletos <ExternalLink size={14} /></a>}
+    {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank"><FolderOpen size={14} /> Pasta principal</a>}
+  </div>
+)}
 
         {tab === 'projetos' && <section>
           <div className="toolbar">
