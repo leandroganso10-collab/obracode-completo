@@ -33,4 +33,4 @@ update public.profiles set role='admin' where email='SEU_EMAIL_AQUI';
 - Envie projetos em PDF/DWG.
 - Ao cadastrar uma nova revisão com o mesmo código, a anterior vira obsoleta.
 - QR Code aponta para a revisão vigente.
-- Auditoria registra ações. 
+- Auditoria registra ações.
