@@ -60,24 +60,15 @@ function statusBanco(status) {
 }
 
 function badge(status) {
-  return 'badge ' + String(status || '').toLowerCase().replaceAll(' ', '-').replace('á', 'a').replace('ê', 'e');
+  return 'badge ' + String(status || '')
+    .toLowerCase()
+    .replaceAll(' ', '-')
+    .replace('á', 'a')
+    .replace('ê', 'e');
 }
 
 function can(user, mod) {
   return perfis[user?.perfil]?.includes(mod);
-}
-
-function driveLink(url) {
-  return url || '#';
-}
-
-function escolherPastaDaObra(obra, disciplina) {
-  const d = String(disciplina || '').toLowerCase();
-  if (d.includes('arquitet')) return obra.drive_arquitetonico;
-  if (d.includes('estrutura') || d.includes('forma') || d.includes('arma')) return obra.drive_estrutura;
-  if (d.includes('instala') || d.includes('hid') || d.includes('elétrica') || d.includes('eletrica') || d.includes('spda') || d.includes('incêndio') || d.includes('incendio')) return obra.drive_instalacoes;
-  if (d.includes('document')) return obra.drive_documentos;
-  return obra.drive_url;
 }
 
 function App() {
@@ -92,6 +83,7 @@ function App() {
   const [obraFiltro, setObraFiltro] = useState('Todas');
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
+
   const [novo, setNovo] = useState({
     obra_id: '',
     obra: 'AG GENEBRA',
@@ -360,19 +352,23 @@ function App() {
 
         {tab === 'obras' && <section className="grid3">
           {obras.map(o => (
-            <div className="panel" key={o.id || o.nome}>
-              <h3>{o.nome}</h3>
-              <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
-              <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
+            <details className="panel obraCard" key={o.id || o.nome}>
+              <summary style={{ cursor: 'pointer', listStyle: 'none' }}>
+                <h3>{o.nome}</h3>
+                <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
+                <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
+                <small>Clique para abrir as pastas</small>
+              </summary>
+
               <div className="driveButtons">
-                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
-                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
-                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
-                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank">Documentos <ExternalLink size={14} /></a>}
-                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank">Obsoletos <ExternalLink size={14} /></a>}
-                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank"><FolderOpen size={14} /> Pasta principal</a>}
+                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank" rel="noreferrer">Arquitetônico <ExternalLink size={14} /></a>}
+                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank" rel="noreferrer">Estrutura <ExternalLink size={14} /></a>}
+                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank" rel="noreferrer">Instalações <ExternalLink size={14} /></a>}
+                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank" rel="noreferrer">Documentos da Obra <ExternalLink size={14} /></a>}
+                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank" rel="noreferrer">Obsoletos <ExternalLink size={14} /></a>}
+                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank" rel="noreferrer"><FolderOpen size={14} /> Pasta principal</a>}
               </div>
-            </div>
+            </details>
           ))}
         </section>}
 
@@ -392,8 +388,8 @@ function App() {
               <td><span className={badge(p.status)}>{p.status}</span></td>
               <td>{p.status === 'Vigente' && p.arquivo_url ? <QRCodeCanvas value={p.arquivo_url} size={48} /> : <span className="lock">bloqueado</span>}</td>
               <td>
-                {p.arquivo_url && <a className="mini" href={p.arquivo_url} target="_blank" onClick={() => addLog('Projeto visualizado', p.codigo, 'projetos', p.id)}><Eye size={15} /></a>}
-                {p.arquivo_url && <a className="mini" href={p.arquivo_url} target="_blank" onClick={() => addLog('Download/acesso ao arquivo', p.codigo, 'projetos', p.id)}><Download size={15} /></a>}
+                {p.arquivo_url && <a className="mini" href={p.arquivo_url} target="_blank" rel="noreferrer" onClick={() => addLog('Projeto visualizado', p.codigo, 'projetos', p.id)}><Eye size={15} /></a>}
+                {p.arquivo_url && <a className="mini" href={p.arquivo_url} target="_blank" rel="noreferrer" onClick={() => addLog('Download/acesso ao arquivo', p.codigo, 'projetos', p.id)}><Download size={15} /></a>}
                 {can(user, 'upload') && <select onChange={e => alterarStatus(p.id, e.target.value)} value={p.status}><option>Vigente</option><option>Em análise</option><option>Obsoleto</option><option>Bloqueado</option></select>}
               </td>
             </tr>)}
@@ -441,4 +437,11 @@ function Card({ icon: Icon, title, value }) {
   return <div className="card"><Icon /><div><span>{title}</span><b>{value}</b></div></div>;
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+let rootElement = document.getElementById('root');
+if (!rootElement) {
+  rootElement = document.createElement('div');
+  rootElement.id = 'root';
+  document.body.appendChild(rootElement);
+}
+
+createRoot(rootElement).render(<App />);
