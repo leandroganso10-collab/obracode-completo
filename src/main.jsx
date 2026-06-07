@@ -375,7 +375,7 @@ function App() {
 
 <small>Clique para abrir as pastas</small>
 
-{obraAberta === o.nome && (
+{false && (
   <div className="driveButtons" onClick={(e) => e.stopPropagation()}>
     {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
     {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
