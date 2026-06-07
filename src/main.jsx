@@ -81,6 +81,7 @@ function App() {
   const [obras, setObras] = useState(obrasPadrao);
   const [busca, setBusca] = useState('');
   const [obraFiltro, setObraFiltro] = useState('Todas');
+  const [obraAberta, setObraAberta] = useState(null);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
 
@@ -350,26 +351,50 @@ function App() {
           </div>
         </section>}
 
-        {tab === 'obras' && <section className="grid3">
-          {obras.map(o => (
-            <details className="panel obraCard" key={o.id || o.nome}>
-              <summary style={{ cursor: 'pointer', listStyle: 'none' }}>
-                <h3>{o.nome}</h3>
-                <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
-                <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
-                <small>Clique para abrir as pastas</small>
-              </summary>
+        {tab === 'obras' && <section className="grid3 obrasGrid">
+          {obras.map(o => {
+            const aberta = obraAberta === o.nome;
+            const totalProjetos = projects.filter(p => p.obra === o.nome).length;
+            const totalVigentes = projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length;
 
-              <div className="driveButtons">
-                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank" rel="noreferrer">📐 Arquitetônico <ExternalLink size={14} /></a>}
-                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank" rel="noreferrer">🏗️ Estrutura <ExternalLink size={14} /></a>}
-                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank" rel="noreferrer">⚡ Instalações <ExternalLink size={14} /></a>}
-                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank" rel="noreferrer">📄 Documentos da Obra <ExternalLink size={14} /></a>}
-                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank" rel="noreferrer">🗂️ Obsoletos <ExternalLink size={14} /></a>}
-                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank" rel="noreferrer"><FolderOpen size={14} /> 📁 Pasta principal</a>}
+            return (
+              <div className={`panel obraCard ${aberta ? 'obraAberta' : ''}`} key={o.id || o.nome}>
+                <button
+                  type="button"
+                  className="obraHeader"
+                  onClick={() => setObraAberta(aberta ? null : o.nome)}
+                  aria-expanded={aberta}
+                >
+                  <span className="obraTitle"><span className="obraIcon">🏢</span>{o.nome}</span>
+                  <span className="obraArrow">{aberta ? '▲' : '▼'}</span>
+                </button>
+
+                <div className="obraStats">
+                  <div><span>Projetos</span><strong>{totalProjetos}</strong></div>
+                  <div><span>Vigentes</span><strong>{totalVigentes}</strong></div>
+                </div>
+
+                <button
+                  type="button"
+                  className="obraHint"
+                  onClick={() => setObraAberta(aberta ? null : o.nome)}
+                >
+                  📁 {aberta ? 'Ocultar documentação' : 'Abrir documentação'}
+                </button>
+
+                {aberta && (
+                  <div className="driveButtons">
+                    {o.drive_arquitetonico && <a className="linkbtn pastaArquitetonico" href={o.drive_arquitetonico} target="_blank" rel="noreferrer"><span>📐</span><b>Arquitetônico</b><ExternalLink size={14} /></a>}
+                    {o.drive_estrutura && <a className="linkbtn pastaEstrutura" href={o.drive_estrutura} target="_blank" rel="noreferrer"><span>🏗️</span><b>Estrutura</b><ExternalLink size={14} /></a>}
+                    {o.drive_instalacoes && <a className="linkbtn pastaInstalacoes" href={o.drive_instalacoes} target="_blank" rel="noreferrer"><span>⚡</span><b>Instalações</b><ExternalLink size={14} /></a>}
+                    {o.drive_documentos && <a className="linkbtn pastaDocumentos" href={o.drive_documentos} target="_blank" rel="noreferrer"><span>📄</span><b>Documentos da Obra</b><ExternalLink size={14} /></a>}
+                    {o.drive_obsoletos && <a className="linkbtn pastaObsoletos" href={o.drive_obsoletos} target="_blank" rel="noreferrer"><span>🗂️</span><b>Obsoletos</b><ExternalLink size={14} /></a>}
+                    {o.drive_url && <a className="linkbtn pastaPrincipal" href={o.drive_url} target="_blank" rel="noreferrer"><span>📁</span><b>Pasta principal</b><ExternalLink size={14} /></a>}
+                  </div>
+                )}
               </div>
-            </details>
-          ))}
+            );
+          })}
         </section>}
 
         {tab === 'projetos' && <section>
