@@ -90,7 +90,6 @@ function App() {
   const [obras, setObras] = useState(obrasPadrao);
   const [busca, setBusca] = useState('');
   const [obraFiltro, setObraFiltro] = useState('Todas');
-  const [obraAberta, setObraAberta] = useState(null);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
   const [novo, setNovo] = useState({
@@ -361,30 +360,21 @@ function App() {
 
         {tab === 'obras' && <section className="grid3">
           {obras.map(o => (
-           <div
-  className="panel obraCard"
-  key={o.id || o.nome}
-  onClick={() => setObraAberta(obraAberta === o.nome ? null : o.nome)}
-  style={{ cursor: 'pointer' }}
->
+            <div className="panel" key={o.id || o.nome}>
               <h3>{o.nome}</h3>
-
-<p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
-
-<p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
-
-<small>Clique para abrir as pastas</small>
-
-{false && (
-  <div className="driveButtons" onClick={(e) => e.stopPropagation()}>
-    {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
-    {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
-    {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
-    {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank">Documentos da Obra <ExternalLink size={14} /></a>}
-    {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank">Obsoletos <ExternalLink size={14} /></a>}
-    {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank"><FolderOpen size={14} /> Pasta principal</a>}
-  </div>
-)}
+              <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
+              <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
+              <div className="driveButtons">
+                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank">Arquitetônico <ExternalLink size={14} /></a>}
+                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank">Estrutura <ExternalLink size={14} /></a>}
+                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank">Instalações <ExternalLink size={14} /></a>}
+                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank">Documentos <ExternalLink size={14} /></a>}
+                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank">Obsoletos <ExternalLink size={14} /></a>}
+                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank"><FolderOpen size={14} /> Pasta principal</a>}
+              </div>
+            </div>
+          ))}
+        </section>}
 
         {tab === 'projetos' && <section>
           <div className="toolbar">
