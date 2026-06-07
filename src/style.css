@@ -273,3 +273,27 @@
     padding: 0 18px 18px;
   }
 }
+.driveButtons{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:12px !important;
+  margin-top:15px !important;
+}
+
+.driveButtons .linkbtn{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:center !important;
+  text-align:center !important;
+  min-height:80px !important;
+  padding:15px !important;
+  border-radius:16px !important;
+  text-decoration:none !important;
+  font-weight:700 !important;
+  margin:0 !important;
+}
+
+.driveButtons .linkbtn svg{
+  margin-top:6px;
+}
