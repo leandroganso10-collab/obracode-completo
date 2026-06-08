@@ -357,16 +357,16 @@ function App() {
                 <h3>{o.nome}</h3>
                 <p>Projetos: {projects.filter(p => p.obra === o.nome).length}</p>
                 <p>Vigentes: {projects.filter(p => p.obra === o.nome && p.status === 'Vigente').length}</p>
-                <small>📁 Clique para abrir as pastas</small>
+                <small>Clique para abrir as pastas</small>
               </summary>
 
-              <div className="driveButtons">
-                {o.drive_arquitetonico && <a className="mini linkbtn" href={o.drive_arquitetonico} target="_blank" rel="noreferrer">📐 Arquitetônico <ExternalLink size={14} /></a>}
-                {o.drive_estrutura && <a className="mini linkbtn" href={o.drive_estrutura} target="_blank" rel="noreferrer">🏗️ Estrutura <ExternalLink size={14} /></a>}
-                {o.drive_instalacoes && <a className="mini linkbtn" href={o.drive_instalacoes} target="_blank" rel="noreferrer">⚡ Instalações <ExternalLink size={14} /></a>}
-                {o.drive_documentos && <a className="mini linkbtn" href={o.drive_documentos} target="_blank" rel="noreferrer">📄 Documentos da Obra <ExternalLink size={14} /></a>}
-                {o.drive_obsoletos && <a className="mini linkbtn" href={o.drive_obsoletos} target="_blank" rel="noreferrer">🗂️ Obsoletos <ExternalLink size={14} /></a>}
-                {o.drive_url && <a className="mini linkbtn" href={o.drive_url} target="_blank" rel="noreferrer"><FolderOpen size={14} /> 📁 Pasta principal</a>}
+              <div className="driveListVertical">
+                {o.drive_arquitetonico && <a className="folderRow" href={o.drive_arquitetonico} target="_blank" rel="noreferrer">📐 Arquitetônico <ExternalLink size={14} /></a>}
+                {o.drive_estrutura && <a className="folderRow" href={o.drive_estrutura} target="_blank" rel="noreferrer">🏗️ Estrutura <ExternalLink size={14} /></a>}
+                {o.drive_instalacoes && <a className="folderRow" href={o.drive_instalacoes} target="_blank" rel="noreferrer">⚡ Instalações <ExternalLink size={14} /></a>}
+                {o.drive_documentos && <a className="folderRow" href={o.drive_documentos} target="_blank" rel="noreferrer">📄 Documentos da Obra <ExternalLink size={14} /></a>}
+                {o.drive_obsoletos && <a className="folderRow" href={o.drive_obsoletos} target="_blank" rel="noreferrer">🗂️ Obsoletos <ExternalLink size={14} /></a>}
+                {o.drive_url && <a className="folderRow" href={o.drive_url} target="_blank" rel="noreferrer"><FolderOpen size={14} /> 📁 Pasta principal</a>}
               </div>
             </details>
           ))}
@@ -445,3 +445,4 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(<App />);
+
