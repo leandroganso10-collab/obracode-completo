@@ -57,42 +57,75 @@
   font-weight: 500;
 }
 
-/* FORÇAR PASTAS UMA EMBAIXO DA OUTRA - COLE NO FINAL */
-.obraCard .driveButtons,
-.panel.obraCard .driveButtons,
-section .obraCard .driveButtons {
+
+/* ===== ObraCode: pastas em lista vertical profissional ===== */
+.obraCard {
+  min-height: 300px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.obraCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, .10);
+}
+
+.obraCard summary {
+  outline: none;
+}
+
+.obraCard small {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 14px;
+  color: #0f4c81;
+  font-weight: 700;
+}
+
+.driveListVertical {
   display: flex !important;
   flex-direction: column !important;
-  grid-template-columns: none !important;
-  gap: 12px !important;
-  margin-top: 16px !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
   width: 100% !important;
 }
 
-.obraCard .driveButtons a,
-.obraCard .driveButtons .mini,
-.obraCard .driveButtons .linkbtn,
-.panel.obraCard .driveButtons a.mini.linkbtn {
+.driveListVertical .folderRow {
   width: 100% !important;
-  min-height: 62px !important;
-  margin: 0 !important;
-  padding: 14px 18px !important;
+  min-height: 50px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 12px !important;
-  text-align: left !important;
-  border-radius: 16px !important;
-  font-size: 15px !important;
-  font-weight: 800 !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 13px 16px !important;
+  border-radius: 15px !important;
+  border: 1px solid #dbe8f3 !important;
   color: #0f4c81 !important;
+  font-weight: 800 !important;
   text-decoration: none !important;
-  box-shadow: 0 6px 16px rgba(15, 76, 129, 0.10) !important;
+  margin: 0 !important;
+  box-shadow: 0 6px 16px rgba(15, 76, 129, .08) !important;
+  background: #ffffff !important;
 }
 
-.obraCard .driveButtons a:nth-child(1) { background: #E3F2FD !important; }
-.obraCard .driveButtons a:nth-child(2) { background: #FFF3E0 !important; }
-.obraCard .driveButtons a:nth-child(3) { background: #E8F5E9 !important; }
-.obraCard .driveButtons a:nth-child(4) { background: #F3E5F5 !important; }
-.obraCard .driveButtons a:nth-child(5) { background: #FFEBEE !important; }
-.obraCard .driveButtons a:nth-child(6) { background: #EDE7F6 !important; }
+.driveListVertical .folderRow:hover {
+  transform: translateX(3px) !important;
+  box-shadow: 0 10px 22px rgba(15, 76, 129, .14) !important;
+}
+
+.driveListVertical .folderRow:nth-child(1) { background: #e3f2fd !important; }
+.driveListVertical .folderRow:nth-child(2) { background: #fff3e0 !important; }
+.driveListVertical .folderRow:nth-child(3) { background: #e8f5e9 !important; }
+.driveListVertical .folderRow:nth-child(4) { background: #f3e5f5 !important; }
+.driveListVertical .folderRow:nth-child(5) { background: #ffebee !important; }
+.driveListVertical .folderRow:nth-child(6) { background: #ede7f6 !important; }
+
+.driveListVertical .folderRow svg {
+  flex: 0 0 auto !important;
+}
+
+@media (max-width: 900px) {
+  .driveListVertical .folderRow {
+    min-height: 48px !important;
+    font-size: 14px !important;
+  }
+}
